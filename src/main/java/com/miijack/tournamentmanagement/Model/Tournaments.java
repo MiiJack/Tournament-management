@@ -1,10 +1,16 @@
 package com.miijack.tournamentmanagement.Model;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
+import lombok.*;
 
+import java.sql.Timestamp;
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 public class Tournaments {
-    private Long id;
+    private int id;
     private String name;
     private String type;
     private Timestamp date;
