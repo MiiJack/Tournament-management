@@ -1,4 +1,4 @@
-package com.miijack.tournamentmanagement.Model;
+package com.miijack.tournamentmanagement.model;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Tournaments {
+public class Tournament {
     private int id;
     private String name;
     private String type;
