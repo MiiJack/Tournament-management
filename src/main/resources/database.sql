@@ -1,5 +1,5 @@
--- Creation of Tournaments Table
-CREATE TABLE tournaments (
+-- Creation of Tournament Table
+CREATE TABLE "tournament" (
      id serial PRIMARY KEY,
      name varchar(255) NOT NULL,
      type varchar(255),
@@ -8,21 +8,21 @@ CREATE TABLE tournaments (
      description text
 );
 
--- Creation of Participants Table
-CREATE TABLE participants (
+-- Creation of Participant Table
+CREATE TABLE "participant" (
     id serial PRIMARY KEY,
     username varchar(255) UNIQUE NOT NULL,
     name varchar(255) NOT NULL,
-    age int,
+    birthdate int,
     team varchar(255)
 );
 
--- Creation of Matches Table
-CREATE TABLE matches (
+-- Creation of Match Table
+CREATE TABLE "match" (
      id serial PRIMARY KEY,
-     tournament_id int REFERENCES tournaments(id) NOT NULL,
-     participant1_id int REFERENCES participants(id) NOT NULL,
-     participant2_id int REFERENCES participants(id) NOT NULL,
+     tournament_id int REFERENCES tournament(id) NOT NULL,
+     participant1_id int REFERENCES participant(id) NOT NULL,
+     participant2_id int REFERENCES participant(id) NOT NULL,
      match_date timestamp DEFAULT current_timestamp,
      participant1_score int DEFAULT 0,
      participant2_score int DEFAULT 0,
