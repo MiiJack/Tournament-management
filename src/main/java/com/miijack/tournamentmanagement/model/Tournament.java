@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Tournament {
-    private int id;
+    private long id;
     private String name;
     private String type;
     private Timestamp date;

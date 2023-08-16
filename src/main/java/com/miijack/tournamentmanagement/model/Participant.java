@@ -11,7 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Participant {
-    private int id;
+    private long id;
     private String username;
     private String name;
     private Date birthdate;
