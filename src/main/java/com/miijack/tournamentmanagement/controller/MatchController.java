@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/match")
+@RequestMapping(path = "/match")
 public class MatchController {
     private MatchService service;
 

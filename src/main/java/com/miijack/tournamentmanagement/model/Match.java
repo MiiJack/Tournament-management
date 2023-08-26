@@ -12,9 +12,9 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 public class Match {
     private long id;
-    private Tournament tournament_id;
-    private Participant participant1_id;
-    private Participant participant2_id;
+    private long tournament_id;
+    private long participant1_id;
+    private long participant2_id;
     private Timestamp match_date;
     private int participant1_score;
     private int participant2_score;
