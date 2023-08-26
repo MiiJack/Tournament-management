@@ -13,7 +13,7 @@ CREATE TABLE "participant" (
     id serial PRIMARY KEY,
     username varchar(255) UNIQUE NOT NULL,
     name varchar(255) NOT NULL,
-    birthdate int,
+    birthdate date,
     team varchar(255)
 );
 
@@ -26,6 +26,6 @@ CREATE TABLE "match" (
      match_date timestamp DEFAULT current_timestamp,
      participant1_score int DEFAULT 0,
      participant2_score int DEFAULT 0,
-     round int
-
+     round int,
+     CHECK (participant1_id != participant2_id)
 );
