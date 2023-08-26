@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class TournamentRepository {
         tournament.setId(result.getLong("id"));
         tournament.setName(result.getString("name"));
         tournament.setType(result.getString("type"));
-        tournament.setDate(result.getTimestamp("date"));
+        tournament.setDate(result.getTimestamp("date").toLocalDateTime());
         tournament.setLocation(result.getString("location"));
         tournament.setDescription(result.getString("description"));
         return tournament;
@@ -32,7 +33,7 @@ public class TournamentRepository {
                 result.getLong("id"),
                 result.getString("name"),
                 result.getString("type"),
-                result.getTimestamp("date"),
+                result.getTimestamp("date").toLocalDateTime(),
                 result.getString("location"),
                 result.getString("description")
         ));
@@ -73,7 +74,7 @@ public class TournamentRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, tournament.getName());
             preparedStatement.setString(2, tournament.getType());
-            preparedStatement.setTimestamp(3, tournament.getDate());
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(tournament.getDate()));
             preparedStatement.setString(4, tournament.getLocation());
             preparedStatement.setString(5, tournament.getDescription());
             preparedStatement.executeUpdate();
@@ -88,7 +89,7 @@ public class TournamentRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, tournament.getName());
             preparedStatement.setString(2, tournament.getType());
-            preparedStatement.setTimestamp(3, tournament.getDate());
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(tournament.getDate()));
             preparedStatement.setString(4, tournament.getLocation());
             preparedStatement.setString(5, tournament.getDescription());
             preparedStatement.setLong(6, id);

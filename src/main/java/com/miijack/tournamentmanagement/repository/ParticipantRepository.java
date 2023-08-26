@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class ParticipantRepository {
                 result.getLong("id"),
                 result.getString("username"),
                 result.getString("name"),
-                result.getDate("birthdate"),
+                result.getDate("birthdate").toLocalDate(),
                 result.getString("team")
         ));
     }
@@ -31,7 +32,7 @@ public class ParticipantRepository {
         participant.setId(result.getLong("id"));
         participant.setUsername(result.getString("username"));
         participant.setName(result.getString("name"));
-        participant.setBirthdate(result.getDate("birthdate"));
+        participant.setBirthdate(result.getDate("birthdate").toLocalDate());
         participant.setTeam(result.getString("team"));
         return participant;
     }
@@ -71,7 +72,7 @@ public class ParticipantRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, participant.getUsername());
             preparedStatement.setString(2, participant.getName());
-            preparedStatement.setDate(3, participant.getBirthdate());
+            preparedStatement.setDate(3, Date.valueOf(participant.getBirthdate()));
             preparedStatement.setString(4, participant.getTeam());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -84,7 +85,7 @@ public class ParticipantRepository {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, participant.getUsername());
             preparedStatement.setString(2, participant.getName());
-            preparedStatement.setDate(3, participant.getBirthdate());
+            preparedStatement.setDate(3, Date.valueOf(participant.getBirthdate()));
             preparedStatement.setString(4, participant.getTeam());
             preparedStatement.setLong(5, id);
             preparedStatement.executeUpdate();

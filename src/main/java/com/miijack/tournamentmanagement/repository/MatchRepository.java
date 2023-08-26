@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class MatchRepository {
         match.setTournament_id(result.getLong("tournament_id"));
         match.setParticipant1_id(result.getLong("participant1_id"));
         match.setParticipant2_id(result.getLong("participant2_id"));
-        match.setMatch_date(result.getTimestamp("match_date"));
+        match.setMatch_date(result.getTimestamp("match_date").toLocalDateTime());
         match.setParticipant1_score(result.getInt("participant1_score"));
         match.setParticipant2_score(result.getInt("participant2_score"));
         match.setRound(result.getInt("round"));
@@ -37,7 +38,7 @@ public class MatchRepository {
                 result.getLong("tournament_id"),
                 result.getLong("participant1_id"),
                 result.getLong("participant2_id"),
-                result.getTimestamp("match_date"),
+                result.getTimestamp("match_date").toLocalDateTime(),
                 result.getInt("participant1_score"),
                 result.getInt("participant2_score"),
                 result.getInt("round")
@@ -83,7 +84,7 @@ public class MatchRepository {
             preparedStatement.setLong(1, match.getTournament_id());
             preparedStatement.setLong(2, match.getParticipant1_id());
             preparedStatement.setLong(3, match.getParticipant2_id());
-            preparedStatement.setTimestamp(4, match.getMatch_date());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(match.getMatch_date()));
             preparedStatement.setInt(5, match.getParticipant1_score());
             preparedStatement.setInt(6, match.getParticipant2_score());
             preparedStatement.setInt(7, match.getRound());
@@ -101,7 +102,7 @@ public class MatchRepository {
             preparedStatement.setLong(1, match.getTournament_id());
             preparedStatement.setLong(2, match.getParticipant1_id());
             preparedStatement.setLong(3, match.getParticipant2_id());
-            preparedStatement.setTimestamp(4, match.getMatch_date());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(match.getMatch_date()));
             preparedStatement.setInt(5, match.getParticipant1_score());
             preparedStatement.setInt(6, match.getParticipant2_score());
             preparedStatement.setInt(7, match.getRound());

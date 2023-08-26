@@ -2,7 +2,7 @@ package com.miijack.tournamentmanagement.model;
 
 import lombok.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,6 +14,6 @@ public class Participant {
     private long id;
     private String username;
     private String name;
-    private Date birthdate;
+    private LocalDate birthdate;
     private String team;
 }

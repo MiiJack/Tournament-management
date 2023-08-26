@@ -2,7 +2,7 @@ package com.miijack.tournamentmanagement.model;
 
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ public class Match {
     private long tournament_id;
     private long participant1_id;
     private long participant2_id;
-    private Timestamp match_date;
+    private LocalDateTime match_date;
     private int participant1_score;
     private int participant2_score;
     private int round;
