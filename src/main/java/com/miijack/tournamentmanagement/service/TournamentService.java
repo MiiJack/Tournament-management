@@ -28,9 +28,7 @@ public class TournamentService {
     }
 
     public Tournament updateTournamentById(long id, Tournament tournament) {
-        tournament.setId(id);
-        repository.update(tournament);
-        return tournament;
+        return repository.update(id, tournament);
     }
 
     public void deleteTournamentById(long id) {
