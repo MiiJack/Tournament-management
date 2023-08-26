@@ -28,9 +28,7 @@ public class ParticipantService {
     }
 
     public Participant updateParticipantById(long id, Participant participant) {
-        participant.setId(id);
-        repository.update(participant);
-        return participant;
+        return repository.update(id, participant);
     }
 
     public void deleteParticipantById(long id) {

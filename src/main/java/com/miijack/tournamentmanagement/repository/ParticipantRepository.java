@@ -63,7 +63,6 @@ public class ParticipantRepository {
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
-
         return participant;
     }
 
@@ -80,18 +79,19 @@ public class ParticipantRepository {
         }
     }
 
-
-    public void update(Participant participant) {
+    public Participant update(long id, Participant participant) {
         String sql = "UPDATE \"participant\" SET username = ?, name = ?, birthdate = ?, team = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, participant.getUsername());
             preparedStatement.setString(2, participant.getName());
             preparedStatement.setDate(3, participant.getBirthdate());
             preparedStatement.setString(4, participant.getTeam());
+            preparedStatement.setLong(5, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return participant;
     }
 
     public void deleteById(long id) {
