@@ -1,0 +1,427 @@
+openapi: "3.0.3"
+info:
+  title: "Tournament management OpenAPI"
+  description: "This API provides you of methods to make your own tournament"
+  version: "0.8.0"
+  contact:
+    email: hei.miranto.2@gmail.com
+servers:
+  - url: "http://localhost:8080"
+tags:
+  - name : match
+    description: "Everything that concerns matches"
+  - name : participant
+    description: "Everything that concerns participants"
+  - name : tournament
+    description: "Everything that concerns tournaments"
+paths:
+  /tournament:
+    get:
+      tags :
+        - tournament
+      summary: "Return a list of tournament"
+      description: "Return a list of tournament"
+      operationId: "getAllTournament"
+      parameters:
+        - name: "pageNumber"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+          description: "Page number for pagination"
+        - name: "pageSize"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+          description: "Number of items per page"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Tournament"
+    post:
+      tags :
+        - tournament
+      summary: "Creates a new tournament"
+      description: "Creates a new tournament"
+      operationId: "createTournament"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tournament"
+        required: true
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Tournament"
+  /tournament/{id}:
+    get:
+      tags :
+        - tournament
+      summary: "Return a tournament by its id"
+      description: "Return a tournament by its id"
+      operationId: "getTournamentById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Tournament"
+    patch:
+      tags :
+        - tournament
+      summary: "Update a tournament by its id"
+      description: "Update a tournament by its id"
+      operationId: "updateTournamentById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Tournament"
+        required: true
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Tournament"
+    delete:
+      tags :
+        - tournament
+      summary: "Delete a tournament by its id"
+      description: "Delete a tournament by its id"
+      operationId: "deleteTournamentById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Successful response"
+  /participant:
+    get:
+      tags :
+      - participant
+      summary: "Return a list of participant"
+      description: "Return a list of participant"
+      operationId: "getAllParticipant"
+      parameters:
+        - name: "pageNumber"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: "pageSize"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Participant"
+    post:
+      tags:
+        - participant
+      summary: "Creates a new participant"
+      description: "Creates a new participant"
+      operationId: "createParticipant"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Participant"
+        required: true
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Participant"
+  /participant/{id}:
+    get:
+      tags:
+        - participant
+      summary: " Return a participant by its id"
+      description: " Return a participant by its id"
+      operationId: "getParticipantById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Participant"
+    patch:
+      tags:
+        - participant
+      summary: "Update a participant by its id"
+      description: "Update a participant by its id"
+      operationId: "updateParticipantById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Participant"
+        required: true
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Participant"
+    delete:
+      tags:
+        - participant
+      summary: "Delete a participant by its id"
+      description: "Delete a participant by its id"
+      operationId: "deleteParticipantById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Successful response"
+  /match:
+    get:
+      tags:
+        - match
+      summary: "Return a list of match"
+      description: "Return a list of match"
+      operationId: "getAllMatch"
+      parameters:
+        - name: "pageNumber"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: "pageSize"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Match"
+    post:
+      tags:
+        - match
+      summary: "Create a new match"
+      description: "Create a new match"
+      operationId: "createMatch"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Match"
+        required: true
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Match"
+  /match/{id}:
+    get:
+      tags:
+        - match
+      summary: "Return a match by its id"
+      description: "Return a match by its id"
+      operationId: "getMatchById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Match"
+    patch:
+      tags:
+        - match
+      summary: "Updates a match by its id"
+      description: "Updates a match by its id"
+      operationId: "updateMatchById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Match"
+        required: true
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Match"
+    delete:
+      tags:
+        - match
+      summary: "Deletes a match by its id"
+      description: "Deletes a match by its id"
+      operationId: "deleteMatchById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Successful response"
+components:
+  schemas:
+    Tournament:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+          example: "1"
+        name:
+          type: "string"
+        type:
+          type: "string"
+        date:
+          type: "string"
+          format: "date-time"
+          example: 2023-09-01
+        location:
+          type: "string"
+        description:
+          type: "string"
+    Participant:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+          example: "1"
+        username:
+          type: "string"
+          example: "Smokilla"
+        name:
+          type: "string"
+        birthdate:
+          type: "string"
+          format: "date"
+          example: "1999-07-09"
+        team:
+          type: "string"
+          example: "BRC Crew"
+    Match:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+          example: "1"
+        tournament_id:
+          type: "integer"
+          format: "int64"
+          example: "1"
+        participant1_id:
+          type: "integer"
+          format: "int64"
+          example: "2"
+        participant2_id:
+          type: "integer"
+          format: "int64"
+          example: "6"
+        match_date:
+          type: "string"
+          format: "date-time"
+          example: "2024-01-26"
+        participant1_score:
+          type: "integer"
+          format: "int32"
+          example: "1"
+        participant2_score:
+          type: "integer"
+          format: "int32"
+          example: "2"
+        round:
+          type: "integer"
+          format: "int32"
+          example: "3"
