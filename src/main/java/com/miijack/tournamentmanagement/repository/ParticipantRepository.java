@@ -3,20 +3,18 @@ package com.miijack.tournamentmanagement.repository;
 import com.miijack.tournamentmanagement.model.Participant;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Date;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class ParticipantRepository {
-    private Connection connection;
+    private final Connection connection;
+
     public ParticipantRepository(Connection connection) {
         this.connection = connection;
     }
+
     private void convertToList(List<Participant> participants, ResultSet result) throws SQLException {
         participants.add(new Participant(
                 result.getLong("id"),
@@ -36,32 +34,38 @@ public class ParticipantRepository {
         participant.setTeam(result.getString("team"));
         return participant;
     }
-    public List<Participant> findAll() {
+
+    public List<Participant> findAll(Integer pageNumber, Integer pageSize) {
         List<Participant> participants = new ArrayList<>();
         String sql = "SELECT * FROM \"participant\"";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        if (pageNumber != null && pageSize != null) {
+            sql += " LIMIT ? OFFSET ?";
+        }
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            if (pageNumber != null && pageSize != null) {
+                preparedStatement.setInt(1, pageSize);
+                preparedStatement.setInt(2, (pageNumber - 1) * pageSize);
+            }
             ResultSet result = preparedStatement.executeQuery();
-
-            while(result.next()){
+            while (result.next()) {
                 convertToList(participants, result);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return participants;
     }
 
     public Participant findById(long id) {
         Participant participant = null;
         String sql = "SELECT * FROM \"participant\" WHERE id = ?";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
             ResultSet result = preparedStatement.executeQuery();
-            while(result.next()){
+            while (result.next()) {
                 participant = convertToParticipant(result);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return participant;

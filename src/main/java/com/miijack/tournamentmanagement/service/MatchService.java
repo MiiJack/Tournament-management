@@ -5,14 +5,17 @@ import com.miijack.tournamentmanagement.repository.MatchRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class MatchService {
-    private MatchRepository repository;
+    private final MatchRepository repository;
+
     public MatchService(MatchRepository repository) {
         this.repository = repository;
     }
-    public List<Match> getAllMatch() {
-        return repository.findAll();
+
+    public List<Match> getAllMatch(Integer pageNumber, Integer pageSize) {
+        return repository.findAll(pageNumber, pageSize);
     }
 
     public Match getMatchById(long id) {

@@ -3,17 +3,13 @@ package com.miijack.tournamentmanagement.repository;
 import com.miijack.tournamentmanagement.model.Match;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class MatchRepository {
-    private Connection connection;
+    private final Connection connection;
 
     public MatchRepository(Connection connection) {
         this.connection = connection;
@@ -44,22 +40,27 @@ public class MatchRepository {
                 result.getInt("round")
         ));
     }
-    public List<Match> findAll() {
+
+    public List<Match> findAll(Integer pageNumber, Integer pageSize) {
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT * FROM \"match\"";
+        if (pageNumber != null && pageSize != null) {
+            sql += " LIMIT ? OFFSET ?";
+        }
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            if (pageNumber != null && pageSize != null) {
+                preparedStatement.setInt(1, pageSize);
+                preparedStatement.setInt(2, (pageNumber - 1) * pageSize);
+            }
             ResultSet result = preparedStatement.executeQuery();
-
             while (result.next()) {
-                 convertToList(matches, result);
+                convertToList(matches, result);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return matches;
     }
-
 
     public Match findById(long id) {
         Match match = null;
@@ -76,10 +77,9 @@ public class MatchRepository {
         return match;
     }
 
-
     public void save(Match match) {
         String sql = "INSERT INTO \"match\" (tournament_id, participant1_id, participant2_id," +
-                     " match_date, participant1_score, participant2_score, round) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                " match_date, participant1_score, participant2_score, round) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, match.getTournament_id());
             preparedStatement.setLong(2, match.getParticipant1_id());
@@ -93,7 +93,6 @@ public class MatchRepository {
             System.out.println(e.getMessage());
         }
     }
-
 
     public void update(Match match) {
         String sql = "UPDATE \"match\" SET tournament_id = ?, participant1_id = ?, participant2_id = ?," +
@@ -112,7 +111,6 @@ public class MatchRepository {
             System.out.println(e.getMessage());
         }
     }
-
 
     public void deleteById(long id) {
         String sql = "DELETE FROM \"match\" WHERE id = ?";

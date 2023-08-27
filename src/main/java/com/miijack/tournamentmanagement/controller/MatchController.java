@@ -9,34 +9,35 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/match")
 public class MatchController {
-    private MatchService service;
+    private final MatchService service;
 
     public MatchController(MatchService service) {
         this.service = service;
     }
 
     @GetMapping
-    public List<Match> getAllMatch(){
-        return service.getAllMatch();
+    public List<Match> getAllMatch(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+                                   @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        return service.getAllMatch(pageNumber, pageSize);
     }
 
     @GetMapping("/{id}")
-    public Match getMatchById(@PathVariable long id){
+    public Match getMatchById(@PathVariable long id) {
         return service.getMatchById(id);
     }
 
     @PostMapping
-    public Match createMatch(@RequestBody Match newMatch){
+    public Match createMatch(@RequestBody Match newMatch) {
         return service.createMatch(newMatch);
     }
 
     @PatchMapping("/{id}")
-    public Match updateMatchById(@PathVariable long id, @RequestBody Match match){
+    public Match updateMatchById(@PathVariable long id, @RequestBody Match match) {
         return service.updateMatchById(id, match);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMatchById(@PathVariable long id){
+    public void deleteMatchById(@PathVariable long id) {
         service.deleteMatchById(id);
     }
 }

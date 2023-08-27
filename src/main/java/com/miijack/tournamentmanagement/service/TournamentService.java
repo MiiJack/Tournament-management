@@ -8,14 +8,14 @@ import java.util.List;
 
 @Service
 public class TournamentService {
-    private TournamentRepository repository;
+    private final TournamentRepository repository;
 
     public TournamentService(TournamentRepository repository) {
         this.repository = repository;
     }
 
-    public List<Tournament> getAllTournament() {
-        return repository.findAll();
+    public List<Tournament> getAllTournament(Integer pageNumber, Integer pageSize) {
+        return repository.findAll(pageNumber, pageSize);
     }
 
     public Tournament getTournamentById(long id) {

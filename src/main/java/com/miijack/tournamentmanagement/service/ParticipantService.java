@@ -8,14 +8,14 @@ import java.util.List;
 
 @Service
 public class ParticipantService {
-    private ParticipantRepository repository;
+    private final ParticipantRepository repository;
 
     public ParticipantService(ParticipantRepository repository) {
         this.repository = repository;
     }
 
-    public List<Participant> getAllParticipant() {
-        return repository.findAll();
+    public List<Participant> getAllParticipant(Integer pageNumber, Integer pageSize) {
+        return repository.findAll(pageNumber, pageSize);
     }
 
     public Participant getParticipantById(long id) {

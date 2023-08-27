@@ -3,21 +3,18 @@ package com.miijack.tournamentmanagement.repository;
 import com.miijack.tournamentmanagement.model.Tournament;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class TournamentRepository {
-    private Connection connection;
+    private final Connection connection;
 
     public TournamentRepository(Connection connection) {
         this.connection = connection;
     }
+
     private Tournament convertToTournament(ResultSet result) throws SQLException {
         Tournament tournament = new Tournament();
         tournament.setId(result.getLong("id"));
@@ -28,6 +25,7 @@ public class TournamentRepository {
         tournament.setDescription(result.getString("description"));
         return tournament;
     }
+
     private void convertToList(List<Tournament> tournaments, ResultSet result) throws SQLException {
         tournaments.add(new Tournament(
                 result.getLong("id"),
@@ -38,32 +36,38 @@ public class TournamentRepository {
                 result.getString("description")
         ));
     }
-    public List<Tournament> findAll() {
+
+    public List<Tournament> findAll(Integer pageNumber, Integer pageSize) {
         List<Tournament> tournaments = new ArrayList<>();
         String sql = "SELECT * FROM \"tournament\"";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        if (pageNumber != null && pageSize != null) {
+            sql += " LIMIT ? OFFSET ?";
+        }
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            if (pageNumber != null && pageSize != null) {
+                preparedStatement.setInt(1, pageSize);
+                preparedStatement.setInt(2, (pageNumber - 1) * pageSize);
+            }
             ResultSet result = preparedStatement.executeQuery();
-
-            while(result.next()){
+            while (result.next()) {
                 convertToList(tournaments, result);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return tournaments;
     }
 
     public Tournament findById(long id) {
         Tournament tournament = null;
         String sql = "SELECT * FROM \"tournament\" WHERE id = ?";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
             ResultSet result = preparedStatement.executeQuery();
-            while(result.next()){
+            while (result.next()) {
                 tournament = convertToTournament(result);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return tournament;
@@ -85,7 +89,7 @@ public class TournamentRepository {
 
     public Tournament update(long id, Tournament tournament) {
         String sql = "UPDATE \"tournament\" SET name = ?, type = ?, date = ?," +
-                     " location = ?, description = ? WHERE id = ?";
+                " location = ?, description = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, tournament.getName());
             preparedStatement.setString(2, tournament.getType());
