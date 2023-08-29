@@ -1,4 +1,4 @@
--- Insert mock data into Tournament Table
+-- Inserting mock data into Tournament Table
 INSERT INTO "tournament" (name, type, date, location, description)
 VALUES
     ('Tekken Tournament', '1v1', '2023-08-15 10:00:00', 'Arcade Arena', 'A fierce Tekken competition'),
@@ -7,7 +7,7 @@ VALUES
     ('Mortal Kombat Mayhem', '1v1', '2023-10-10 11:00:00', 'Dark Arena', 'Finish Him!'),
     ('Smash Bros. Brawl', '1v1', '2023-11-25 15:00:00', 'Game Nexus', 'Fight with your favorite characters');
 
--- Insert mock data into Participant Table
+-- Inserting mock data into Participant Table
 INSERT INTO "participant" (username, name, birthdate, team)
 VALUES
     ('NinaKiller', 'Nina Williams', '1980-04-22', 'Team Mishima'),
@@ -29,7 +29,7 @@ VALUES
     ('PlumberBro', 'Mario Mario', '1981-07-09', 'Super Mushroom Kingdom'),
     ('PrincessSaver', 'Link Hero', '1986-02-21', 'Hyrule Knights');
 
--- Insert mock data into Match Table
+-- Inserting mock data into Match Table
 INSERT INTO "match" (tournament_id, participant1_id, participant2_id, participant1_score, participant2_score, round, match_date)
 VALUES
     (1, 1, 3, 2, 1, 3, '2023-08-15 10:00:00'),
@@ -39,7 +39,7 @@ VALUES
     (1, 9, 10, 0, 2, 2, '2023-08-15 14:00:00'),
     (2, 11, 12, 2, 0, 2, '2023-08-15 15:00:00'),
     (2, 13, 14, 2, 0, 2, '2023-08-15 16:00:00'),
-    (2, 15, 16, 1, 1, 2, '2023-08-15 17:00:00'),
+    (2, 15, 16, 1, 2, 3, '2023-08-15 17:00:00'),
     (2, 17, 1, 3, 2, 5, '2023-09-05 13:30:00'),
     (3, 9, 2, 1, 2, 3, '2023-09-05 14:30:00'),
     (3, 2, 5, 2, 1, 3, '2023-09-20 16:15:00'),
