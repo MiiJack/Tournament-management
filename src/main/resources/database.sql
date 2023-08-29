@@ -1,3 +1,7 @@
+CREATE DATABASE tournamentdb;
+
+\c tournamentdb
+
 -- Creation of Tournament Table
 CREATE TABLE "tournament" (
      id serial PRIMARY KEY,
