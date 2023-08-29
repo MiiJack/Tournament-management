@@ -122,4 +122,37 @@ public class MatchRepository {
         }
     }
 
+    public int[] getWinnerAndLoserIds(long matchId) {
+        String sql1 = "SELECT participant1_id, participant1_score, participant2_id, participant2_score " +
+                "FROM \"match\" " +
+                "WHERE id = ? " +
+                "AND participant1_score > participant2_score";
+        String sql2 = "SELECT participant2_id, participant1_id " +
+                "FROM \"match\" " +
+                "WHERE id = ? " +
+                "AND participant2_score > participant1_score";
+        int[] winnerAndLoserIds = new int[2];
+        try (PreparedStatement preparedStatement1 = connection.prepareStatement(sql1);
+             PreparedStatement preparedStatement2 = connection.prepareStatement(sql2)) {
+            preparedStatement1.setLong(1, matchId);
+            ResultSet result1 = preparedStatement1.executeQuery();
+            if (result1.next()) {
+                winnerAndLoserIds[0] = result1.getInt("participant1_id");
+                winnerAndLoserIds[1] = result1.getInt("participant2_id");
+            } else {
+                preparedStatement2.setLong(1, matchId);
+                ResultSet result2 = preparedStatement2.executeQuery();
+                if (result2.next()) {
+                    winnerAndLoserIds[0] = result2.getInt("participant2_id");
+                    winnerAndLoserIds[1] = result2.getInt("participant1_id");
+                } else {
+                    winnerAndLoserIds[0] = -1;
+                    winnerAndLoserIds[1] = -1;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return winnerAndLoserIds;
+    }
 }

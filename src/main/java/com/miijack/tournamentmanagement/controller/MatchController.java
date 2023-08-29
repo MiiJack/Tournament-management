@@ -1,24 +1,34 @@
 package com.miijack.tournamentmanagement.controller;
 
 import com.miijack.tournamentmanagement.model.Match;
+import com.miijack.tournamentmanagement.model.Participant;
 import com.miijack.tournamentmanagement.service.MatchService;
+import com.miijack.tournamentmanagement.service.OtherService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/match")
 public class MatchController {
     private final MatchService service;
+    private final OtherService otherService;
 
-    public MatchController(MatchService service) {
+    public MatchController(MatchService service, OtherService otherService) {
         this.service = service;
+        this.otherService = otherService;
     }
 
     @GetMapping
     public List<Match> getAllMatch(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
                                    @RequestParam(value = "pageSize", required = false) Integer pageSize) {
         return service.getAllMatch(pageNumber, pageSize);
+    }
+
+    @GetMapping("/{id}/results")
+    public Map<String, Participant> displayResults(@PathVariable long id){
+        return otherService.displayResults(id);
     }
 
     @GetMapping("/{id}")
