@@ -19,8 +19,8 @@ paths:
     get:
       tags :
         - tournament
-      summary: "Return a list of tournament"
-      description: "Return a list of tournament"
+      summary: "Returns a list of tournament"
+      description: "Returns a list of tournament"
       operationId: "getAllTournament"
       parameters:
         - name: "pageNumber"
@@ -69,8 +69,8 @@ paths:
     get:
       tags :
         - tournament
-      summary: "Return a tournament by its id"
-      description: "Return a tournament by its id"
+      summary: "Returnes a tournament by its id"
+      description: "Returnes a tournament by its id"
       operationId: "getTournamentById"
       parameters:
         - name: "id"
@@ -89,8 +89,8 @@ paths:
     patch:
       tags :
         - tournament
-      summary: "Update a tournament by its id"
-      description: "Update a tournament by its id"
+      summary: "Updates a tournament by its id"
+      description: "Updates a tournament by its id"
       operationId: "updateTournamentById"
       parameters:
         - name: "id"
@@ -115,8 +115,8 @@ paths:
     delete:
       tags :
         - tournament
-      summary: "Delete a tournament by its id"
-      description: "Delete a tournament by its id"
+      summary: "Deletes a tournament by its id"
+      description: "Deletes a tournament by its id"
       operationId: "deleteTournamentById"
       parameters:
         - name: "id"
@@ -132,8 +132,8 @@ paths:
     get:
       tags:
         - tournament
-      summary: "Return a list of upcoming tournament"
-      description: "Return a list of upcoming tournament"
+      summary: "Returns a list of upcoming tournament"
+      description: "Returns a list of upcoming tournament"
       operationId: "getFutureTournament"
       parameters:
         - name: "pageNumber"
@@ -163,8 +163,8 @@ paths:
     get:
       tags :
       - participant
-      summary: "Return a list of participant"
-      description: "Return a list of participant"
+      summary: "Returns a list of participant"
+      description: "Returns a list of participant"
       operationId: "getAllParticipant"
       parameters:
         - name: "pageNumber"
@@ -218,8 +218,8 @@ paths:
     get:
       tags:
         - participant
-      summary: " Return a participant by its id"
-      description: " Return a participant by its id"
+      summary: " Returns a participant by its id"
+      description: " Returns a participant by its id"
       operationId: "getParticipantById"
       parameters:
         - name: "id"
@@ -238,8 +238,8 @@ paths:
     patch:
       tags:
         - participant
-      summary: "Update a participant by its id"
-      description: "Update a participant by its id"
+      summary: "Updates a participant by its id"
+      description: "Updates a participant by its id"
       operationId: "updateParticipantById"
       parameters:
         - name: "id"
@@ -264,8 +264,8 @@ paths:
     delete:
       tags:
         - participant
-      summary: "Delete a participant by its id"
-      description: "Delete a participant by its id"
+      summary: "Deletes a participant by its id"
+      description: "Deletes a participant by its id"
       operationId: "deleteParticipantById"
       parameters:
         - name: "id"
@@ -281,8 +281,8 @@ paths:
     get:
       tags:
         - participant
-      summary: " Return a list of participant by the tournament id"
-      description: " Return a list of participant by the tournament id"
+      summary: " Returns a list of participant by the tournament id"
+      description: " Returns a list of participant by the tournament id"
       operationId: "getParticipantByTournamentId"
       parameters:
         - name: "id"
@@ -314,8 +314,8 @@ paths:
     get:
       tags:
         - match
-      summary: "Return a list of match"
-      description: "Return a list of match"
+      summary: "Returns a list of match"
+      description: "Returns a list of match"
       operationId: "getAllMatch"
       parameters:
         - name: "pageNumber"
@@ -342,8 +342,8 @@ paths:
     post:
       tags:
         - match
-      summary: "Create a new match"
-      description: "Create a new match"
+      summary: "Creates a new match"
+      description: "Creates a new match"
       operationId: "createMatch"
       parameters:
         - name: "id"
@@ -369,8 +369,8 @@ paths:
     get:
       tags:
         - match
-      summary: "Return a match by its id"
-      description: "Return a match by its id"
+      summary: "Returns a match by its id"
+      description: "Returns a match by its id"
       operationId: "getMatchById"
       parameters:
         - name: "id"
@@ -432,8 +432,8 @@ paths:
     get:
       tags:
         - match
-      summary: "Return the result of a match by its id"
-      description: "Return the result of a match by its id with the participants"
+      summary: "Returns the result of a match by its id"
+      description: "Returns the result of a match by its id with the participants"
       operationId: "displayResults"
       parameters:
         - name: "id"
