@@ -71,6 +71,31 @@ public class ParticipantRepository {
         return participant;
     }
 
+    public List<Participant> findByTournamentId(long tournamentId, Integer pageNumber, Integer pageSize) {
+        List<Participant> participants = new ArrayList<>();
+        String sql = "SELECT distinct participant.* FROM \"participant\" " +
+                "INNER JOIN \"match\" ON participant.id = match.participant1_id " +
+                "OR participant.id = match.participant2_id " +
+                "WHERE match.tournament_id = ?";
+        if (pageNumber != null && pageSize != null) {
+            sql += " LIMIT ? OFFSET ?";
+        }
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setLong(1, tournamentId);
+            if (pageNumber != null && pageSize != null) {
+                preparedStatement.setInt(2, pageSize);
+                preparedStatement.setInt(3, (pageNumber - 1) * pageSize);
+            }
+            ResultSet result = preparedStatement.executeQuery();
+            while (result.next()) {
+                participants.add(convertToParticipant(result));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return participants;
+    }
+
     public void save(Participant participant) {
         String sql = "INSERT INTO \"participant\" (username, name, birthdate, team) VALUES (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

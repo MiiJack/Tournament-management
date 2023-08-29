@@ -32,5 +32,5 @@ CREATE TABLE "match" (
      participant2_score int DEFAULT 0,
      round int,
      CHECK (participant1_id != participant2_id),
-     CONSTRAINT check_round_sum CHECK (round = participant1_score + participant2_score)
+     CONSTRAINT check_round_sum CHECK (round >= participant1_score + participant2_score)
 );

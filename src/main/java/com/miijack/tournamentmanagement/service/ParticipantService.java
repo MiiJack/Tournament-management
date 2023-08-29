@@ -22,6 +22,10 @@ public class ParticipantService {
         return repository.findById(id);
     }
 
+    public List<Participant> getParticipantByTournamentId(long id, Integer pageNumber, Integer pageSize) {
+        return repository.findByTournamentId(id, pageNumber, pageSize);
+    }
+
     public Participant createParticipant(Participant newParticipant) {
         repository.save(newParticipant);
         return newParticipant;

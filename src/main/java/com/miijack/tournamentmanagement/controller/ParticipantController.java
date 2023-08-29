@@ -26,6 +26,13 @@ public class ParticipantController {
         return service.getParticipantById(id);
     }
 
+    @GetMapping("/tournament/{id}")
+    public List<Participant> getParticipantByTournamentId(@PathVariable long id,
+                                                          @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+                                                          @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        return service.getParticipantByTournamentId(id, pageNumber, pageSize);
+    }
+
     @PostMapping
     public Participant createParticipant(@RequestBody Participant newParticipant) {
         return service.createParticipant(newParticipant);
