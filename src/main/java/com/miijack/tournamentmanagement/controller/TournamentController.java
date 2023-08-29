@@ -26,6 +26,12 @@ public class TournamentController {
         return service.getTournamentById(id);
     }
 
+    @GetMapping("/upcoming")
+    public List<Tournament> getFutureTournament(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+                                                @RequestParam(value = "pageSize", required = false) Integer pageSize){
+        return service.getFutureTournament(pageNumber, pageSize);
+    }
+
     @PostMapping
     public Tournament createTournament(@RequestBody Tournament newTournament) {
         return service.createTournament(newTournament);

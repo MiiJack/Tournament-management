@@ -4,6 +4,8 @@ import com.miijack.tournamentmanagement.model.Tournament;
 import com.miijack.tournamentmanagement.repository.TournamentRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +23,25 @@ public class TournamentService {
     public Tournament getTournamentById(long id) {
         return repository.findById(id);
     }
+
+    public List<Tournament> getFutureTournament(Integer pageNumber, Integer pageSize) {
+        List<Tournament> tournaments = repository.findAll(null, null);
+        List<Tournament> futureTournaments = new ArrayList<>();
+        for (Tournament tournament : tournaments) {
+            if (tournament.getDate().isAfter(LocalDateTime.now())) {
+                futureTournaments.add(tournament);
+            }
+        }
+        int startIndex = 0;
+        int endIndex = futureTournaments.size();
+
+        if (pageNumber != null && pageSize != null) {
+            startIndex = (pageNumber - 1) * pageSize;
+            endIndex = Math.min(startIndex + pageSize, futureTournaments.size());
+        }
+        return futureTournaments.subList(startIndex, endIndex);
+    }
+
 
     public Tournament createTournament(Tournament newTournament) {
         repository.save(newTournament);
