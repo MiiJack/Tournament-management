@@ -2,7 +2,7 @@ openapi: "3.0.3"
 info:
   title: "Tournament management OpenAPI"
   description: "This API provides you of methods to make your own tournament"
-  version: "0.8.0"
+  version: "0.9.0"
   contact:
     email: hei.miranto.2@gmail.com
 servers:
@@ -163,6 +163,13 @@ paths:
       summary: "Creates a new participant"
       description: "Creates a new participant"
       operationId: "createParticipant"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
       requestBody:
         content:
           application/json:
@@ -239,6 +246,40 @@ paths:
       responses:
         "200":
           description: "Successful response"
+  /participant/tournament/{id}:
+    get:
+      tags:
+        - participant
+      summary: " Return a list of participant by the tournament id"
+      description: " Return a list of participant by the tournament id"
+      operationId: "getParticipantByTournamentId"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+        - name: "pageNumber"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+        - name: "pageSize"
+          in: "query"
+          required: false
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Participant"
+
   /match:
     get:
       tags:
@@ -274,6 +315,13 @@ paths:
       summary: "Create a new match"
       description: "Create a new match"
       operationId: "createMatch"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
       requestBody:
         content:
           application/json:
@@ -350,6 +398,27 @@ paths:
       responses:
         "200":
           description: "Successful response"
+  /match/{id}/results:
+    get:
+      tags:
+        - match
+      summary: "Return the result of a match by its id"
+      description: "Return the result of a match by its id with the participants"
+      operationId: "displayResults"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "Successful response"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Match"
 components:
   schemas:
     Tournament:
